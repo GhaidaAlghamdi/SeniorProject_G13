@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Create Account </title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="QRstyle.css">
+    <link rel="stylesheet" href="FormCreateAccount.css">
+    <style>
+        .carding {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-auto-rows: auto;
+            position: flex;
+        }
+
+        .card {
+
+            top: 50%;
+            left: 50%;
+            height: 570px;
+            width: 320px;
+
+            background-color: rgb(255 255 255 / 49%);
+            -webkit-backdrop-filter: blur(20px);
+            backdrop-filter: blur(20px);
+
+
+            border-radius: 8px;
+            -webkit-box-shadow: 20px 20px 22px rgba(0, 0, 0, 0.2);
+            box-shadow: 20px 20px 22px rgba(0, 0, 0, 0.2);
+            font-family: 'Poppins', sans-serif;
+            margin: 30px;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            display: relative;
+            align-items: center;
+            justify-content: center;
+
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="l-header">
+        <nav class="nav bd-grid">
+
+
+            <div>
+                <a href="#" class="nav__logo">نُظِّمْ.</a>
+            </div>
+
+            <div class="nav__toggle" id="nav-toggle">
+                <i class='bx bx-menu'></i>
+            </div>
+
+            <div class="nav__menu" id="nav-menu">
+                <div class="nav__close" id="nav-close">
+                    <i class='bx bx-x'></i>
+                </div>
+
+                <ul class="nav__list">
+                    <li class="nav__item"><a href="#home" class="nav__link active">الانشطة</a></li>
+                    <li class="nav__item"><a href="#about" class="nav__link">الاشعارات</a></li>
+                    <li class="nav__item"><a href="#skills" class="nav__link">المحادثات</a></li>
+                    <li class="nav__item"><a href="#contact" class="nav__link"> تصاريح</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <div class="home__container bd-grid">
+        <div class="background">
+
+
+            <div class="carding">
+                <div class="containerr">
+                    <div class="title">Create Account</div>
+                    <div class="content">
+                       <!-- <form action="#"> -->
+                            <div class="user-details">
+                                <div class="input-box">
+                                    <span class="details">ID</span>
+                                    <input type="text" name="id" id="id" placeholder="Enter The ID" required>
+                                </div>
+                                <div class="input-box">
+                                    <span class="details">Name</span>
+                                    <input type="text" id="name" name="name" placeholder="Enter The Name" required>
+                                </div>
+                                <div class="input-box">
+                                    <span class="details">Email</span>
+                                    <input type="text" name="email" id="email" placeholder="Enter The email" required>
+                                </div>
+                                <div class="input-box">
+                                    <span class="details">Phone Number</span>
+                                    <input type="text" name="phone" id="phone" placeholder="Enter The number" required>
+                                </div>
+                                <div class="input-box">
+                                    <span class="details">Password</span>
+                                    <input type="text" name="pass" id="pass" placeholder="Enter The password" required>
+                                </div>
+                            </div>
+                            <div class="gender-details">
+                                <input type="radio" name="gender" id="dot-1">
+                                <input type="radio" name="gender" id="dot-2">
+                                <span class="gender-title">Gender</span>
+                                <div class="category">
+                                    <label for="dot-1">
+                                        <span class="dot one"></span>
+                                        <span class="gender">Male</span>
+                                    </label>
+                                    <label for="dot-2">
+                                        <span class="dot two"></span>
+                                        <span class="gender">Female</span>
+                                    </label>
+
+                                </div>
+                            </div>
+                            <div class="button">
+                                <button class="btn">Generate Password</button>
+                            </div>
+                            <div class="button">
+                                <button class="btn" id="insBtn" name="insBtn">Create
+                                    Account</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+
+
+                <div class="card" style="text-align: center;">
+
+                    <div id="qrcode"></div>
+
+
+                    <form style=" margin-top: 90%;">
+                        <button class=" btn" type="submit" id="generate-button"><i class="fa fa-gear"></i>
+                            GENERATE</button>
+                    </form>
+                    <button class=" btn" id="download-button"><i class="fa fa-download"></i> DOWNLOAD</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <!--===== GSAP =====-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.5.1/gsap.min.js"></script>
+
+    <!--===== MAIN JS =====-->
+    <script src="main.js"></script>
+    <script src="qrcode.js"></script>
+    <script  src="app.js"></script>
+
+
+    <script type="module">
+        var currentUserId = "";
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword, updateProfile } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-auth.js";
+        import { getDatabase, ref, get, set, child, update, remove } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-database.js";
+
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyB6Vef9JnY3xB0GL2PwE_HbXLgt3HeOAfw",
+            authDomain: "authentication-7b4e2.firebaseapp.com",
+            databaseURL: "https://authentication-7b4e2-default-rtdb.firebaseio.com",
+            projectId: "authentication-7b4e2",
+            storageBucket: "authentication-7b4e2.appspot.com",
+            messagingSenderId: "25287000851",
+            appId: "1:25287000851:web:cf131084c87dbd757c10e6"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+        const auth = getAuth(app);
+
+        var btn = document.getElementById("insBtn");
+        var idbox = document.getElementById("id");
+        var namebox = document.getElementById("name");
+        var email = document.getElementById("email");
+        var password = document.getElementById("pass");
+        var phonenum = document.getElementById("phone");
+
+        btn.addEventListener("click", function () {
+            var gender = "male";
+            if (document.getElementById("dot-2").checked) {
+                gender = "female";
+            }
+            createUserWithEmailAndPassword(auth, email.value, password.value)
+                .then((userCredential) => {
+
+                    const user = userCredential.user;
+                    currentUserId = user.uid;
+                    localStorage['userId'] = currentUserId
+                    writeUserData(currentUserId, idbox.value, namebox.value, email.value, password.value, phonenum.value,gender);
+
+                })
+                .catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    alert(errorMessage);
+                });
+
+
+
+        });
+
+        function writeUserData(userId, id, name, email, password, phone,gender) {
+
+            set(ref(db, 'Parent/' + userId), {
+                id: id,
+                name: name,
+                email: email,
+                password: password,
+                phone: phone,
+                gender: gender
+            });
+        }
+    </script>
+
+</body>
+
+</html>
