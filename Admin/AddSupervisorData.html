@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Supervisor Data </title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="FormCreateAccount.css">
+    <script defer src="node_modules/swup/dist/swup.min.js"></script>
+    <script defer src="script.js"></script>
+    <link href="Trans.css" rel="stylesheet">
+</head>
+<body>
+
+
+
+<header class="l-header">
+    <nav class="nav bd-grid">
+
+
+        <div>
+            <a href="#" class="nav__logo">نُظِّمْ.</a>
+        </div>
+
+        <div class="nav__toggle" id="nav-toggle">
+            <i class='bx bx-menu'></i>
+        </div>
+
+        <div class="nav__menu" id="nav-menu">
+            <div class="nav__close" id="nav-close">
+                <i class='bx bx-x'></i>
+            </div>
+
+            <ul class="nav__list">
+                <li class="nav__item"><a href="#home" class="nav__link active">الانشطة</a></li>
+                <li class="nav__item"><a href="#about" class="nav__link">الاشعارات</a></li>
+                <li class="nav__item"><a href="#skills" class="nav__link">المحادثات</a></li>
+                <li class="nav__item"><a href="#contact" class="nav__link"> تصاريح</a></li>
+            </ul>
+        </div>
+    </nav>
+</header>
+<div class="home__container bd-grid">
+    <div class="background">
+
+
+        <div class="carding" >
+            <div class="containerr" >
+                <div class="title">Add Supervisor Data</div>
+                <div class="content">
+                    <form action="#">
+                        <div class="user-details">
+                            <div class="input-box">
+                                <span class="details">Enter Supervisor ID</span>
+                                <input type="text" placeholder="Enter Supervisor ID" required>
+                            </div>
+                            <div class="input-box">
+                                <span class="details">Enter Supervisor Name</span>
+                                <input type="text" placeholder="Enter Supervisor Name" required>
+                            </div>
+                            <div class="input-box">
+                                <span class="details" >Supervisor Email</span>
+                                <input type="text"  id="email" placeholder="Enter Supervisor email" required>
+                            </div>
+                            <div class="input-box">
+                                <span class="details">Supervisor Phone Number</span>
+                                <input type="text" placeholder="Enter Supervisor number" required>
+                            </div>
+                            <div class="input-box">
+                                <span class="details">Supervisor Password</span>
+                                <input type="text" placeholder="Generated Password" required>
+                            </div>
+
+                        </div>
+                        <div class="gender-details">
+                            <input type="radio" name="gender" id="dot-1">
+                            <input type="radio" name="gender" id="dot-2">
+                            <span class="gender-title">Gender</span>
+                            <div class="category">
+                                <label for="dot-1">
+                                    <span class="dot one"></span>
+                                    <span class="gender">Male</span>
+                                </label>
+                                <label for="dot-2">
+                                    <span class="dot two"></span>
+                                    <span class="gender">Female</span>
+                                </label>
+
+                            </div>
+                        </div>
+
+                        <div class="button">
+                            <button class="btn" >Generate Password</button>
+                        </div>
+                        <div>
+                            <button class="btn" >Add Supervisor</button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+
+
+
+            <div class="card"  style= "text-align: center;">
+                <label style="padding:10%; font-size: 40px; ">Supervisor</label>
+
+                <img src="teacher.jpg" alt="Avatar">
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+<!--===== GSAP =====-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.5.1/gsap.min.js"></script>
+
+<!--===== MAIN JS =====-->
+<script src="main.js"></script>
+<script src="qrcode.js"></script>
+<script src="app.js"></script>
+
+
+</body>
+
+</html>
+<style>
+
+.carding{
+display: grid;
+grid-template-columns: repeat(2, 1fr);
+grid-auto-rows: auto;
+position: flex;
+}
+.card{
+
+top: 50%;
+    left: 50%;
+    height: 570px;
+    width: 320px;
+
+    background-color: rgb(255 255 255 / 49%);
+    -webkit-backdrop-filter: blur(20px);
+            backdrop-filter: blur(20px);
+
+
+    border-radius: 8px;
+    -webkit-box-shadow: 20px 20px 22px rgba(0,0,0,0.2);
+    box-shadow: 20px 20px 22px rgba(0,0,0,0.2);
+    font-family: 'Poppins',sans-serif;
+   margin: 30px;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    display: relative;
+    align-items: center;
+    justify-content: center;
+
+}
+img {
+  border-radius: 90%;
+  margin:13px;
+  width:300px
+
+
+}
+button.btn{
+height: 100%;
+   width: 100%;
+   border-radius: 5px;
+   border: none;
+   color: #fff;
+   font-size: 18px;
+   font-weight: 500;
+   letter-spacing: 1px;
+   cursor: pointer;
+   transition: all 0.3s ease;
+   background:#64949c;
+   height: 45px;
+   margin: 35px 0
+}
+
+button.btn:hover{
+  /* transform: scale(0.99); */
+  background: linear-gradient(-135deg, #71b7e6, #9b59b6);
+  }
+
+
+    </style>
