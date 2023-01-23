@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- =====BOX ICONS===== -->
+  <!-- ===== CSS ===== -->
+  <link rel="stylesheet" href="styles.css">
+
+
+  <title>نُظم</title>
+</head>
+<body>
+<!--===== HEADER =====-->
+<header class="l-header">
+  <nav class="nav bd-grid">
+
+
+    <div>
+      <a href="#" class="nav__logo">نُظِّمْ.</a>
+    </div>
+
+    <div class="nav__toggle" id="nav-toggle">
+      <i class='bx bx-menu'></i>
+    </div>
+
+    <div class="nav__menu" id="nav-menu">
+      <div class="nav__close" id="nav-close">
+        <i class='bx bx-x'></i>
+      </div>
+
+      <ul class="nav__list">
+        <li class="nav__item"><a href="#home" class="nav__link active">الانشطة</a></li>
+        <li class="nav__item"><a href="#about" class="nav__link">الاشعارات</a></li>
+        <li class="nav__item"><a href="#skills" class="nav__link">المحادثات</a></li>
+        <li class="nav__item"><a href="#contact" class="nav__link"> تصاريح</a></li>
+      </ul>
+    </div>
+  </nav>
+</header>
+
+<main class="l-main">
+  <!--===== HOME =====-->
+  <section class="home" id="home">
+    <div class="home__container bd-grid">
+<div class="background">
+
+
+<div class="carding">
+
+      <div class="card">
+        <div class="card-img">
+          <img src="child.jpg" alt="child">
+        </div>
+        <div class="desc">
+          <h6 class="primary-text">الطلاب</h6>
+
+        </div>
+        <a href="AddStudentData.html"><button class="primary">إضافة</button> </a>
+        <a href="#"><button class="Secondary">حذف</button> </a>
+        <div class="details">
+
+
+        </div>
+      </div>
+
+  <div class="card">
+    <div class="card-img">
+      <img src="teacher.jpg" alt="3d teacher">
+    </div>
+    <div class="desc">
+      <h6 class="primary-text">المشرفون</h6>
+
+    </div>
+    <a href="AddSupervisorData.html"><button class="primary">إضافة</button> </a>
+    <a href="#"><button class="Secondary">حذف</button> </a>
+    <div class="details">
+
+
+    </div>
+  </div>
+
+
+
+  <div class="card">
+    <div class="card-img">
+      <img src="father.jpg" alt="father 3d ">
+    </div>
+    <div class="desc">
+      <h6 class="primary-text">أولياء الأمور</h6>
+
+    </div>
+
+    <a href="AddParentData.html"><button class="primary">إضافة</button> </a>
+    <a href="#"><button class="Secondary">حذف</button> </a>
+
+    <div class="details">
+
+
+
+
+    </div>
+  </div>
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+  </section>
+</main>
+
+
+<style>
+
+.background{
+background-image: url("me.png");
+background-repeat: no-repeat;
+background-size:contain;
+background-position: center;
+
+}
+
+
+
+
+.carding{
+
+
+display: grid;
+
+grid-template-columns: repeat(3, 1fr);
+
+grid-auto-rows: auto;
+
+grid-gap: 1rem;
+
+}
+.card{
+    height: 400px;
+    width: 320px;
+
+    background-color: rgba(255, 255, 255, 0.06);
+    -webkit-backdrop-filter: blur(20px);
+            backdrop-filter: blur(20px);
+
+     margin: auto;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    border-radius: 8px;
+    -webkit-box-shadow: 20px 20px 22px rgba(0,0,0,0.2);
+            box-shadow: 20px 20px 22px rgba(0,0,0,0.2);
+    font-family: 'Poppins',sans-serif;
+}
+.card-img{
+    height: 120px;
+    width: 120px;
+    background-color: rgba(255, 255, 255, 0.06);
+    -webkit-backdrop-filter: blur(20px);
+            backdrop-filter: blur(20px);
+    border-radius: 50%;
+    position: absolute;
+    margin: 30px auto 20px  auto;
+    left: 0;
+    right: 0;
+
+}
+.card-img img{
+    height: 86%;
+    border-radius: 50%;
+    margin-left: 7%;
+    margin-top: 7%;
+}
+h6{
+    margin: 0;
+}
+.desc{
+    width: 100%;
+    text-align: center;
+    position: absolute;
+    top: 160px;
+}
+.primary-text{
+    color: white;
+    font-size: 25px ;
+    font-weight: 600;
+    letter-spacing: 0.7px;
+    margin: 5px 0;
+}
+
+button{
+    background-color: rgba(255, 255, 255, 0.06);
+    -webkit-backdrop-filter: blur(20px);
+            backdrop-filter: blur(20px);
+    border: none;
+
+}
+.primary{
+    color: #70919e;
+    font-size:23 px  ;
+    font-weight: 600;
+    letter-spacing: 0.7px;
+    margin: 7px 0;
+}
+
+.Secondary{
+    color: #70919e;
+    font-size:23 px  ;
+    font-weight: 600;
+    letter-spacing: 0.7px;
+    margin: 64px 0;
+}
+.details>div{
+    text-align: center;
+}
+.details>div:first-child{
+    border-right: 2px solid rgba(255,255,255,0.08);
+}
+button{
+    width: 80%;
+    padding: 15px 0;
+    position: absolute;
+    left: 10%;
+    top: 240px;
+    border-radius: 5px;
+    outline: none;
+}
+
+button:hover{
+background-color:#e0eefb;
+
+}
+
+a>.fa{
+  color: #FF0000;
+}
+@media screen and (min-width: 451px) {
+  a{
+    font-size: 18px;
+     padding:8px 12px 8px 12px;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  a{
+    font-size: 12px;
+     padding:5px 8px 5px 8px;
+  }
+}
+
+
+
+
+</style>
+
+<!--===== GSAP =====-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.5.1/gsap.min.js"></script>
+
+<!--===== MAIN JS =====-->
+<script src="main.js"></script>
+
+
+
+
+
+</body>
+</html>
