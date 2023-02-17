@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    <title>Admin</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link rel="stylesheet"
+        href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
+    <link rel="stylesheet" href="css/style.css">
+
+</head>
+
+<body >
+
+
+    <input type="checkbox" id="nav-toggle">
+    <div class="sidebar">
+        <div class="sidebar-brand">
+            <h2><span class="las la-clinic-medical"></span> <span>نظم</span></h2>
+        </div>
+        <!--القائمه الجانبية-->
+        <div class="sidebar-menu">
+            <ul>
+                <li>
+                    <a href="pickup.html">
+                        <span>اشعارات الانصراف و الوصول</span></a>
+                </li>
+
+                <li>
+                    <a href="EarlyPermission.html">
+                        <span>اشعارات الخروج المبكر</span></a>
+                </li>
+
+                <li>
+                    <a href="addActivity.html">
+                        <span>إضافة الأنشطة</span></a>
+                </li>
+
+                <li>
+                    <a href="activites.html">
+                        <span>عرض الأنشطة</span></a>
+                </li>
+
+                <li>
+                    <a href="Absences.html">
+                        <span>أعذار الغياب</span></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <header>
+            <h2>
+                <label for="nav-toggle">
+                    <span class="las la-bars"></span>
+                </label> نظم
+            </h2>
+
+            <div class="search-wrapper">
+                <span class="las la-search"></span>
+                <input type="search" placeholder="ادخل ما تبحث عنه" />
+            </div>
+            <div class="user-wrapper">
+                <img src="img/Avatar.png" width="40px" height="40px" alt="">
+                <div>
+                    <h4>Administrador</h4>
+                    <small>Super Admin</small>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class col-md-12>
+                        <span class="form-label">ID</span>
+                        <input type="text" class="form-control" name="id" id="id"  required>
+                    </div>
+                    <div class col-md-12>
+                        <span class="details">Name</span>
+                        <input type="text" id="name" class="form-control" name="name" placeholder="Enter The Name"
+                            required>
+                    </div>
+                    <div class="col-md-12 mt-2 mb-2">
+                        <Label>male</Label>
+                        <input type="radio" name="gender" id="gMale" />
+                        <Label>female</Label>
+                        <input type="radio" name="gender" id="gFeMale" />
+                    </div>
+                    <div class col-md-12>
+                        <span class="details">Email</span>
+                        <input type="text" name="email" class="form-control" id="email" placeholder="Enter The email"
+                            required>
+                    </div>
+                    <div class col-md-12>
+                        <span class="details">Phone Number</span>
+                        <input type="text" name="phone" class="form-control" id="phone" placeholder="Enter The number"
+                            required>
+                    </div>
+                    <div class col-md-12>
+                        <span class="details">Password</span>
+                        <input type="text" name="pass" class="form-control" id="pass" placeholder="Enter The password"
+                            required readonly>
+                    </div>
+                    <div class="col-md-12">
+                        <span class="details">SuperVisor grade</span>
+                        <select class="form-control " id="sGrade" name="sGrade">
+                            <option>-------Select student Grade----------</option>
+                            <option value="1">First Grade</option>
+                            <option value="2">Second Grade</option>
+                            <option value="3">Third Grade</option>
+                            <option value="4">Fourth Grade</option>
+                            <option value="5">Fifth Grade</option>
+                            <option value="6">Sixth Grade</option>
+                          </select>
+                       </div>
+                    <div class="col-md-12 m-0  mt-2 text-center">
+                        <button id="insBtn" class="btn btn-success" name="insBtn">Update Account</button>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+
+    </div>
+
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-app.js";
+        import { getDatabase, ref, child, set, get } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-database.js";
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyB6Vef9JnY3xB0GL2PwE_HbXLgt3HeOAfw",
+            authDomain: "authentication-7b4e2.firebaseapp.com",
+            databaseURL: "https://authentication-7b4e2-default-rtdb.firebaseio.com",
+            projectId: "authentication-7b4e2",
+            storageBucket: "authentication-7b4e2.appspot.com",
+            messagingSenderId: "25287000851",
+            appId: "1:25287000851:web:cf131084c87dbd757c10e6"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+        function GetURLParameter(sParam) {
+            var sPageURL = window.location.search.substring(1);
+            var sURLVariables = sPageURL.split('&');
+            for (var i = 0; i < sURLVariables.length; i++) {
+                var sParameterName = sURLVariables[i].split('=');
+                if (sParameterName[0] == sParam) {
+                    return sParameterName[1];
+                }
+            }
+        }
+        var superVisorId = GetURLParameter('superVisorId');
+
+        window.addEventListener("load", getSuperVisorDetails);
+        var btn = document.getElementById("insBtn");
+        var idbox = document.getElementById("id");
+        var namebox = document.getElementById("name");
+        var email = document.getElementById("email");
+        var password = document.getElementById("pass");
+        var phonenum = document.getElementById("phone");
+        var rbMale = document.getElementById("gMale");
+        var rbFeMale = document.getElementById("gFeMale");
+        var sGrade = document.getElementById("sGrade");
+        btn.addEventListener('click', UpdateSuperVisorDetails);
+
+        function getSuperVisorDetails() {
+            const dbRef = ref(getDatabase());
+            get(child(dbRef, `Supervisor/` + superVisorId)).then((snapshot) => {
+                if (snapshot.exists()) {
+
+                    var superVisorData = snapshot.val();
+                    idbox.value = superVisorData['id'];
+                    namebox.value = superVisorData['name'];
+                    email.value = superVisorData['email'];
+                    phonenum.value = superVisorData['phone'];
+                    password.value = superVisorData['password'];
+                    sGrade.value = superVisorData['AssignedGrade'];
+                    if (superVisorData['gender'] == "male") {
+                        rbMale.checked = true;
+                    } else {
+                        rbFeMale.checked = true;
+                    }
+
+                } else {
+                    console.log("No data available");
+                }
+            }).catch((error) => {
+                console.error(error);
+            });
+        }
+        function CheckforUsedPhone(phone) {
+            const dbRef = ref(getDatabase());
+            get(child(dbRef, `Supervisor` )).then((snapshot) => {
+                if (snapshot.exists()) {
+                    snapshot.forEach((childSnapshot) => {
+                        var key = childSnapshot.key;
+                        var data = childSnapshot.val();
+                        if (String(data['phone']) == String(phone)) {
+                            return true;
+                        }
+                    });
+
+                } else {
+                    alert("data not found");
+                }
+            }).catch((error) => {
+                console.error(error);
+            });
+        }
+        function CheckforUsedId(id) {
+            const dbRef = ref(getDatabase());
+            get(child(dbRef, `Supervisor`)).then((snapshot) => {
+                if (snapshot.exists()) {
+                    snapshot.forEach((childSnapshot) => {
+                        var key = childSnapshot.key;
+                        var data = childSnapshot.val();
+                        if (String(data['id']) == String(id)) {
+                            return true;
+                        }
+                    });
+
+                    return false;
+                } else {
+                    alert("data not found");
+                }
+            }).catch((error) => {
+                console.error(error);
+            });
+
+        }
+        function UpdateSuperVisorDetails() {
+            if(CheckforUsedId(idbox.value))
+            {
+                alert("id is used before");
+                return;
+            }
+            if(CheckforUsedPhone(phonenum.value))
+            {
+                alert("phone number is used before");
+                return;
+            }
+            var gender = "";
+            if (rbMale.checked) {
+                gender = "male";
+            } else {
+                gender = "female";
+            }
+            set(ref(db, 'Supervisor/' + superVisorId), {
+                id: idbox.value,
+                name: namebox.value,
+                email: email.value,
+                password: password.value,
+                phone: phonenum.value,
+                gender: gender,
+                AssignedGrade: sGrade.value,
+            }).then(function () {
+                alert("Supervisor Account Updated Successfully");
+            });
+        }
+
+
+    </script>
+</body>
+
+</html>

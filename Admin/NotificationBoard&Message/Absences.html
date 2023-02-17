@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    <title> نُـظِّـم</title>
+    <link rel="stylesheet"
+        href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
+    <link rel="stylesheet" href="css/style.css">
+
+</head>
+
+<body>
+
+    <input type="checkbox" id="nav-toggle">
+    <div class="sidebar">
+        <div class="sidebar-brand">
+            <h2><span>نُـظِّـم</span></h2>
+        </div>
+
+        <!--القائمه الجانبية-->
+        <div class="sidebar-menu">
+            <ul>
+                <li>
+                    <a href="pickup.html">
+                        <span>اشعارات الانصراف و الوصول</span></a>
+                </li>
+
+                <li>
+                    <a href="EarlyPermission.html">
+                        <span>اشعارات الخروج المبكر</span></a>
+                </li>
+
+                <li>
+                    <a href="addActivity.html">
+                        <span>إضافة الأنشطة</span></a>
+                </li>
+
+                <li>
+                    <a href="activites.html">
+                        <span>عرض الأنشطة</span></a>
+                </li>
+
+                <li>
+                    <a href="" class="active">
+                        <span>أعذار الغياب</span></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <header>
+            <h2>
+                <label for="nav-toggle">
+                    <span class="las la-bars"></span>
+                </label> نُـظِّـم
+            </h2>
+
+            <div class="search-wrapper">
+                <span class="las la-search"></span>
+                <input type="search" placeholder="ادخل ما تبحث عنه" />
+            </div>
+
+            <div class="user-wrapper">
+                <img src="img/Avatar.png" width="40px" height="40px" alt="">
+                <div>
+                    <h4>Supervisor</h4>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <div class="cards">
+
+
+            </div>
+            <!--Tabla-->
+            <div class="recent-grid">
+                <div class="projects">
+                    <div class="card">
+                        <div class="card-header ">
+                            <h3>اعذار الغياب</h3>
+                        </div>
+
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table width="100%">
+                                    <thead>
+                                        <tr>
+                                            <td>اسم ولي الامر</td>
+                                            <td>سبب الغياب</td>
+                                            <td>صورة للعذر</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tdBody"> </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+
+
+            </div>
+        </main>
+
+    </div>
+
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-app.js";
+        import { getDatabase, ref, child, set, get, onValue } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-database.js";
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyB6Vef9JnY3xB0GL2PwE_HbXLgt3HeOAfw",
+            authDomain: "authentication-7b4e2.firebaseapp.com",
+            databaseURL: "https://authentication-7b4e2-default-rtdb.firebaseio.com",
+            projectId: "authentication-7b4e2",
+            storageBucket: "authentication-7b4e2.appspot.com",
+            messagingSenderId: "25287000851",
+            appId: "1:25287000851:web:cf131084c87dbd757c10e6"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+        const dbRef = ref(getDatabase());
+        window.addEventListener("load", getAbsences);
+        function getAbsences() {
+            get(child(dbRef, `Images`)).then((snapshot) => {
+                if (snapshot.exists()) {
+                    snapshot.forEach((childSnapshot) => {
+                        var childKey = childSnapshot.key;
+                        var childData = childSnapshot.val();
+                        var parentName = "";
+                        console.log(childKey);
+                        get(child(dbRef, `Parent/` + childKey)).then((snapshot) => {
+                            if (snapshot.exists()) {
+                                var parentData = snapshot.val();
+                                parentName = parentData['name'];
+                                console.log("parent name :" + parentName);
+                            }
+                        }).then(()=>{
+                            childSnapshot.forEach((data) => {
+                            var key = data.key;
+                            var v = data.val();
+                            document.getElementById('tdBody').innerHTML += '<tr><td>' + parentName + '</td><td>' + v['imageName'] + '</td><td><a target="new_blank" href="' + v['imageURL'] + '"><img width=100 height=100 src="' + v['imageURL'] + '"/></a></td></tr>';
+                        })
+                        })
+                        
+                       
+
+                        console.log(childData['imageURL']);
+                    })
+
+                } else {
+                    console.log("No data available");
+                }
+            }).catch((error) => {
+                console.error(error);
+            });
+        }
+
+
+
+      
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    <title>Admin</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+</head>
+
+<body >
+<div class="bg"></div>
+
+    <input type="checkbox" id="nav-toggle">
+
+    <div class="sidebar">
+        <div class="sidebar-brand">
+            <h2><span ></span> <span>نظم</span></h2>
+        </div>
+        <!--القائمه الجانبية-->
+        <div class="sidebar-menu">
+            <ul>
+                <li>
+                    <a href="pickup.html" class="active">
+                        <span>اشعارات الانصراف و الوصول</span></a>
+                </li>
+
+                <li>
+                    <a href="EarlyPermission.html">
+                        <span>اشعارات الخروج المبكر</span></a>
+                </li>
+
+                <li>
+                    <a href="addActivity.html">
+                        <span>إضافة الأنشطة</span></a>
+                </li>
+
+                <li>
+                    <a href="activites.html">
+                        <span>عرض الأنشطة</span></a>
+                </li>
+
+                <li>
+                    <a href="Absences.html">
+                        <span>أعذار الغياب</span></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <header>
+            <h2>
+                <label for="nav-toggle">
+                    <span class="las la-bars"></span>
+                </label> نظم
+            </h2>
+
+            <div class="search-wrapper">
+                <span class="las la-search"></span>
+                <input type="search" placeholder="ادخل ما تبحث عنه" />
+            </div>
+            <div class="user-wrapper">
+                <img src="img/Avatar.png" width="40px" height="40px" alt="">
+                <div>
+                    <h4>Supervisor</h4>
+                    <small></small>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <div class="mainCard">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class col-md-12>
+                        <span class="form-label" style="
+                              color:#7f7de8;
+                              font-size: 25px;
+                              font-weight: 500;
+                              position: relative;">ID</span>
+                    <input type="text" class="form-control" name="id" id="id"  required>
+                    </div>
+                    <div class col-md-12>
+                        <span class="details">Name</span>
+                        <input type="text" id="name" class="form-control" name="name" placeholder="Enter The Name"
+                            required>
+                    </div>
+                    <div class="col-md-12 mt-2 mb-2">
+                        <Label>male</Label>
+                        <input type="radio" name="gender" id="gMale" />
+                        <Label>female</Label>
+                        <input type="radio" name="gender" id="gFeMale" />
+                    </div>
+                    <div class col-md-12>
+                        <span class="details">Email</span>
+                        <input type="text" name="email" class="form-control" id="email" placeholder="Enter The email"
+                            required>
+                    </div>
+                    <div class col-md-12>
+                        <span class="details">Phone Number</span>
+                        <input type="text" name="phone" class="form-control" id="phone" placeholder="Enter The number"
+                            required>
+                    </div>
+                    <div class col-md-12>
+                        <span class="details">Password</span>
+                        <input type="text" name="pass" class="form-control" id="pass" placeholder="Enter The password"
+                            required readonly>
+                    </div>
+                    <div class="col-md-12 m-0  mt-2 text-center">
+                        <button id="insBtn" class="btn btn-success" name="insBtn" style="margin: 1cm;">Update Account</button>
+                    </div>
+                </div>
+            </div>
+            </div>
+
+        </main>
+
+    </div>
+
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-app.js";
+        import { getDatabase, ref, child, set, get } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-database.js";
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyB6Vef9JnY3xB0GL2PwE_HbXLgt3HeOAfw",
+            authDomain: "authentication-7b4e2.firebaseapp.com",
+            databaseURL: "https://authentication-7b4e2-default-rtdb.firebaseio.com",
+            projectId: "authentication-7b4e2",
+            storageBucket: "authentication-7b4e2.appspot.com",
+            messagingSenderId: "25287000851",
+            appId: "1:25287000851:web:cf131084c87dbd757c10e6"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+        function GetURLParameter(sParam) {
+            var sPageURL = window.location.search.substring(1);
+            var sURLVariables = sPageURL.split('&');
+            for (var i = 0; i < sURLVariables.length; i++) {
+                var sParameterName = sURLVariables[i].split('=');
+                if (sParameterName[0] == sParam) {
+                    return sParameterName[1];
+                }
+            }
+        }
+        var parentId = GetURLParameter('parentId');
+
+        window.addEventListener("load", getParentDetails);
+        var btn = document.getElementById("insBtn");
+        var idbox = document.getElementById("id");
+        var namebox = document.getElementById("name");
+        var email = document.getElementById("email");
+        var password = document.getElementById("pass");
+        var phonenum = document.getElementById("phone");
+        var rbMale = document.getElementById("gMale");
+        var rbFeMale = document.getElementById("gFeMale");
+        btn.addEventListener('click', UpdateParentDetails);
+
+        function getParentDetails() {
+            const dbRef = ref(getDatabase());
+            get(child(dbRef, `Parent/` + parentId)).then((snapshot) => {
+                if (snapshot.exists()) {
+
+                    var parentData = snapshot.val();
+                    idbox.value = parentData['id'];
+                    namebox.value = parentData['name'];
+                    email.value = parentData['email'];
+                    phonenum.value = parentData['phone'];
+                    password.value = parentData['password'];
+                    if (parentData['gender'] == "male") {
+                        rbMale.checked = true;
+                    } else {
+                        rbFeMale.checked = true;
+                    }
+
+                } else {
+                    console.log("No data available");
+                }
+            }).catch((error) => {
+                console.error(error);
+            });
+        }
+        function CheckforUsedPhone(phone) {
+            const dbRef = ref(getDatabase());
+            get(child(dbRef, `Parent` )).then((snapshot) => {
+                if (snapshot.exists()) {
+                    snapshot.forEach((childSnapshot) => {
+                        var key = childSnapshot.key;
+                        var data = childSnapshot.val();
+                        if (String(data['phone']) == String(phone)) {
+                            return true;
+                        }
+                    });
+
+                } else {
+                    alert("data not found");
+                }
+            }).catch((error) => {
+                console.error(error);
+            });
+        }
+        function CheckforUsedId(id) {
+            const dbRef = ref(getDatabase());
+            get(child(dbRef, `Parent`)).then((snapshot) => {
+                if (snapshot.exists()) {
+                    snapshot.forEach((childSnapshot) => {
+                        var key = childSnapshot.key;
+                        var data = childSnapshot.val();
+                        if (String(data['id']) == String(id)) {
+                            return true;
+                        }
+                    });
+
+                    return false;
+                } else {
+                    alert("data not found");
+                }
+            }).catch((error) => {
+                console.error(error);
+            });
+
+        }
+        function UpdateParentDetails() {
+            if(CheckforUsedId(idbox.value))
+            {
+                alert("id is used before");
+                return;
+            }
+            if(CheckforUsedPhone(phonenum.value))
+            {
+                alert("phone number is used before");
+                return;
+            }
+            var gender = "";
+            if (rbMale.checked) {
+                gender = "male";
+            } else {
+                gender = "female";
+            }
+            set(ref(db, 'Parent/' + parentId), {
+                id: idbox.value,
+                name: namebox.value,
+                email: email.value,
+                password: password.value,
+                phone: phonenum.value,
+                gender: gender
+            }).then(function () {
+                alert("Parent Account Updated Successfully");
+            });
+        }
+
+
+    </script>
+</body>
+
+</html>

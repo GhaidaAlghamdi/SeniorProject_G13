@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    <title>Admin</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link rel="stylesheet"
+        href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
+    <link rel="stylesheet" href="css/style.css">
+
+</head>
+
+<body>
+
+
+    <input type="checkbox" id="nav-toggle">
+    <div class="sidebar">
+        <div class="sidebar-brand">
+            <h2><span class="las la-clinic-medical"></span> <span>نظم</span></h2>
+        </div>
+        <!--القائمه الجانبية-->
+        <div class="sidebar-menu">
+            <ul>
+                <li>
+                    <a href="pickup.html">
+                        <span>اشعارات الانصراف و الوصول</span></a>
+                </li>
+
+                <li>
+                    <a href="EarlyPermission.html">
+                        <span>اشعارات الخروج المبكر</span></a>
+                </li>
+
+                <li>
+                    <a href="addActivity.html">
+                        <span>إضافة الأنشطة</span></a>
+                </li>
+
+                <li>
+                    <a href="activites.html" class="active">
+                        <span>عرض الأنشطة</span></a>
+                </li>
+
+                <li>
+                    <a href="Absences.html">
+                        <span>أعذار الغياب</span></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <header>
+            <h2>
+                <label for="nav-toggle">
+                    <span class="las la-bars"></span>
+                </label> نظم
+            </h2>
+
+            <div class="search-wrapper">
+                <span class="las la-search"></span>
+                <input type="search" placeholder="ادخل ما تبحث عنه" />
+            </div>
+            <div class="user-wrapper">
+                <img src="img/Avatar.png" width="40px" height="40px" alt="">
+                <div>
+                    <h4>Administrador</h4>
+                    <small>Super Admin</small>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            
+            <!--Tabla-->
+            <div class="recent-grid">
+                <div class="projects">
+                    <div class="card">
+                        <div class="card-header ">
+                            <h3>الطلاب</h3>
+                           
+
+                        </div>
+
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table width="100%">
+                                    <thead>
+                                        <tr>
+                                            <td> رقم الهوية</td>
+                                            <td>اسم الطالب</td>
+                                            <td> العمر</td>
+                                            <td>رقم سجل ولي الأمر </td>
+                                            <td>الجنس </td>
+                                            <td> الصف</td>
+                                           
+                                        <td>#</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tdBody"> </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+
+
+            </div>
+        </main>
+
+    </div>
+
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-app.js";
+        import { getDatabase, ref, child, set, get } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-database.js";
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyB6Vef9JnY3xB0GL2PwE_HbXLgt3HeOAfw",
+            authDomain: "authentication-7b4e2.firebaseapp.com",
+            databaseURL: "https://authentication-7b4e2-default-rtdb.firebaseio.com",
+            projectId: "authentication-7b4e2",
+            storageBucket: "authentication-7b4e2.appspot.com",
+            messagingSenderId: "25287000851",
+            appId: "1:25287000851:web:cf131084c87dbd757c10e6"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+        window.addEventListener("load", getStudents);
+    
+        // function update_view(event){
+        //     alert(event.target.getAttribute('id'));
+        // }
+
+        function getStudents() {
+
+
+            const dbRef = ref(getDatabase());
+            get(child(dbRef, `Student`)).then((snapshot) => {
+                if (snapshot.exists()) {
+
+                    snapshot.forEach((childSnapshot) => {
+                        var key = childSnapshot.key;
+                        var data = childSnapshot.val();
+                        
+                        document.getElementById('tdBody').innerHTML += '<tr><td>' + data['StudentId'] + '</td><td>'+ data['name']+ '</td><td>'+ data['Age']+ '</td><td>'+ data['ParentId']+ '</td><td>'+ data['Gender']+ '</td><td>'+ data['Grade']+'</td><td><a href="updateStudent.html?StudentId='+key+'" class="btn btn-info text-white" >تعديل </a></td></tr>';
+
+                    });
+                } else {
+                    console.log("No data available");
+                }
+            }).catch((error) => {
+                console.error(error);
+            });
+        }
+
+
+        
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    <title>Admin</title>
+    <link rel="stylesheet" href="css/style.css">
+
+</head>
+
+<body dir="rtl">
+
+
+    <input type="checkbox" id="nav-toggle">
+    <div class="sidebar">
+        <div class="sidebar-brand">
+            <h2><span class="las la-clinic-medical"></span> <span>نظم</span></h2>
+        </div>
+        <!--القائمه الجانبية-->
+        <div class="sidebar-menu">
+            <ul>
+                <li>
+                    <a href="pickup.html">
+                        <span>اشعارات الانصراف و الوصول</span></a>
+                </li>
+
+                <li>
+                    <a href="EarlyPermission.html">
+                        <span>اشعارات الخروج المبكر</span></a>
+                </li>
+
+                <li>
+                    <a href="addActivity.html">
+                        <span>إضافة الأنشطة</span></a>
+                </li>
+
+                <li>
+                    <a href="activites.html">
+                        <span>عرض الأنشطة</span></a>
+                </li>
+
+                <li>
+                    <a href="Absences.html">
+                        <span>أعذار الغياب</span></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <header>
+            <h2>
+                <label for="nav-toggle">
+                    <span class="las la-bars"></span>
+                </label> نظم
+            </h2>
+
+            <div class="search-wrapper">
+                <span class="las la-search"></span>
+                <input type="search" placeholder="ادخل ما تبحث عنه" />
+            </div>
+            <div class="user-wrapper">
+                <img src="img/Avatar.png" width="40px" height="40px" alt="">
+                <div>
+                    <h4>Administrador</h4>
+                    <small>Super Admin</small>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class col-md-12>
+                        <span class="form-label">ID</span>
+                        <input type="text" class="form-control" name="id" id="id"  required>
+                    </div>
+                    <div class col-md-12>
+                        <span class="details">Name</span>
+                        <input type="text" id="name" class="form-control" name="name" placeholder="Enter The Name"
+                            required>
+                    </div>
+                    <div class="col-md-12 mt-2 mb-2">
+                        <span class="details">Gender</span><br/>
+                        <Label>male</Label>
+                        <input type="radio" name="gender" id="gMale" />
+                        <Label>female</Label>
+                        <input type="radio" name="gender" id="gFeMale" />
+                    </div>
+                    <div class col-md-12>
+                        <span class="details">Age</span>
+                        <input type="text" name="age" class="form-control" id="age" placeholder="Enter The age"
+                            required>
+                    </div>
+                    <div class col-md-12>
+                        <span class="details">parent Id</span>
+                        <input type="text" name="parentId" class="form-control" id="parentId" placeholder="Enter The number"
+                            required>
+                    </div>
+                   <div class="col-md-12">
+                    <span class="details">student grade</span>
+                    <select class="form-control " id="sGrade" name="sGrade">
+                        <option>-------Select student Grade----------</option>
+                        <option value="1">First Grade</option>
+                        <option value="2">Second Grade</option>
+                        <option value="3">Third Grade</option>
+                        <option value="4">Fourth Grade</option>
+                        <option value="5">Fifth Grade</option>
+                        <option value="6">Sixth Grade</option>
+                      </select>
+                   </div>
+                    <div class="col-md-12 m-0  mt-2 text-center">
+                        <button id="insBtn" class="btn btn-success" name="insBtn">Update Account</button>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+
+    </div>
+
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-app.js";
+        import { getDatabase, ref, child, set, get } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-database.js";
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyB6Vef9JnY3xB0GL2PwE_HbXLgt3HeOAfw",
+            authDomain: "authentication-7b4e2.firebaseapp.com",
+            databaseURL: "https://authentication-7b4e2-default-rtdb.firebaseio.com",
+            projectId: "authentication-7b4e2",
+            storageBucket: "authentication-7b4e2.appspot.com",
+            messagingSenderId: "25287000851",
+            appId: "1:25287000851:web:cf131084c87dbd757c10e6"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+        function GetURLParameter(sParam) {
+            var sPageURL = window.location.search.substring(1);
+            var sURLVariables = sPageURL.split('&');
+            for (var i = 0; i < sURLVariables.length; i++) {
+                var sParameterName = sURLVariables[i].split('=');
+                if (sParameterName[0] == sParam) {
+                    return sParameterName[1];
+                }
+            }
+        }
+        var StudentId = GetURLParameter('StudentId');
+
+        window.addEventListener("load", getStudentDetails);
+        var btn = document.getElementById("insBtn");
+        var idbox = document.getElementById("id");
+        var namebox = document.getElementById("name");
+        var sGrade = document.getElementById("sGrade");
+        var parentId = document.getElementById("parentId");
+        var age = document.getElementById("age");
+        var rbMale = document.getElementById("gMale");
+        var rbFeMale = document.getElementById("gFeMale");
+        btn.addEventListener('click', UpdateStudentDetails);
+
+        function getStudentDetails() {
+            const dbRef = ref(getDatabase());
+            get(child(dbRef, `Student/` + StudentId)).then((snapshot) => {
+                if (snapshot.exists()) {
+
+                    var studentData = snapshot.val();
+                    age.value = studentData['Age'];
+                    namebox.value = studentData['name'];
+                    sGrade.value = studentData['Grade'];
+                    parentId.value = studentData['ParentId'];
+                    idbox.value = studentData['StudentId'];
+                    if (studentData['Gender'] == "male") {
+                        rbMale.checked = true;
+                    } else {
+                        rbFeMale.checked = true;
+                    }
+
+                } else {
+                    console.log("No data available");
+                }
+            }).catch((error) => {
+                console.error(error);
+            });
+        }
+        function CheckforUsedPhone(phone) {
+            const dbRef = ref(getDatabase());
+            get(child(dbRef, `Student` )).then((snapshot) => {
+                if (snapshot.exists()) {
+                    snapshot.forEach((childSnapshot) => {
+                        var key = childSnapshot.key;
+                        var data = childSnapshot.val();
+                        if (String(data['phone']) == String(phone)) {
+                            return true;
+                        }
+                    });
+
+                } else {
+                    alert("data not found");
+                }
+            }).catch((error) => {
+                console.error(error);
+            });
+        }
+        function CheckforUsedId(id) {
+            const dbRef = ref(getDatabase());
+            get(child(dbRef, `Student`)).then((snapshot) => {
+                if (snapshot.exists()) {
+                    snapshot.forEach((childSnapshot) => {
+                        var key = childSnapshot.key;
+                        var data = childSnapshot.val();
+                        if (String(data['id']) == String(id)) {
+                            return true;
+                        }
+                    });
+
+                    return false;
+                } else {
+                    alert("data not found");
+                }
+            }).catch((error) => {
+                console.error(error);
+            });
+
+        }
+        function UpdateStudentDetails() {
+            if(CheckforUsedId(idbox.value))
+            {
+                alert("id is used before");
+                return;
+            }
+            if(CheckforUsedPhone(phonenum.value))
+            {
+                alert("phone number is used before");
+                return;
+            }
+            var gender = "";
+            if (rbMale.checked) {
+                gender = "male";
+            } else {
+                gender = "female";
+            }
+            set(ref(db, 'Student/' + StudentId), {
+                Age: age.value,
+                name: namebox.value,
+                Grade: sGrade.value,
+                ParentId: parentId.value,
+                StudentId: idbox.value,
+                Gender: gender
+            }).then(function () {
+                alert("Parent Account Updated Successfully");
+            });
+        }
+
+
+    </script>
+</body>
+
+</html>

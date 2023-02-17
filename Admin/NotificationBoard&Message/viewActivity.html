@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    <title>Supervisor</title>
+    <link rel="stylesheet" href="css/style.css">
+
+</head>
+
+<body>
+
+
+    <input type="checkbox" id="nav-toggle">
+    <div class="sidebar">
+        <div class="sidebar-brand">
+            <h2></span> <span>نظم</span></h2>
+        </div>
+        <!--القائمه الجانبية-->
+        <div class="sidebar-menu">
+            <ul>
+                <li>
+                    <a href="pickup.html">
+                        <span>اشعارات الانصراف و الوصول</span></a>
+                </li>
+
+                <li>
+                    <a href="EarlyPermission.html">
+                        <span>اشعارات الخروج المبكر</span></a>
+                </li>
+
+                <li>
+                    <a href="addActivity.html">
+                        <span>إضافة الأنشطة</span></a>
+                </li>
+
+                <li>
+                    <a href="activites.html" class="active">
+                        <span>عرض الأنشطة</span></a>
+                </li>
+
+                <li>
+                    <a href="Absences.html">
+                        <span>أعذار الغياب</span></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <header>
+            <h2>
+                <label for="nav-toggle">
+                    <span class="las la-bars"></span>
+                </label> نظم
+            </h2>
+
+            <div class="search-wrapper">
+                <span class="las la-search"></span>
+                <input type="search" placeholder="ادخل ما تبحث عنه" />
+            </div>
+            <div class="user-wrapper">
+                <img src="img/Avatar.png" width="40px" height="40px" alt="">
+                <div>
+                    <h4>Administrador</h4>
+                    <small>Super Admin</small>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <div class="cards">
+
+
+            </div>
+            <!--Tabla-->
+            <div class="recent-grid">
+                <div class="projects">
+                    <div class="card">
+                        <div class="card-header ">
+                           
+                            <h3 id="title"></h3>
+                         
+                        </div>
+                        <div class="container-fluid">
+                            <div class="me-3"> <p id="activType"></p></div>
+                            <div class="me-3"> <p id="activBody"></p></div>
+                           
+                        </div>
+                        
+                       
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table width="100%">
+                                    <thead>
+                                        <tr>
+                                            <td>اسم ولي الأمر</td>
+
+                                            <td>الحالة </td>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tdBody">
+
+
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+
+
+            </div>
+        </main>
+
+    </div>
+
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-app.js";
+        import { getDatabase, ref, child, set, get } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-database.js";
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyB6Vef9JnY3xB0GL2PwE_HbXLgt3HeOAfw",
+            authDomain: "authentication-7b4e2.firebaseapp.com",
+            databaseURL: "https://authentication-7b4e2-default-rtdb.firebaseio.com",
+            projectId: "authentication-7b4e2",
+            storageBucket: "authentication-7b4e2.appspot.com",
+            messagingSenderId: "25287000851",
+            appId: "1:25287000851:web:cf131084c87dbd757c10e6"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+        function GetURLParameter(sParam) {
+            var sPageURL = window.location.search.substring(1);
+            var sURLVariables = sPageURL.split('&');
+            for (var i = 0; i < sURLVariables.length; i++) {
+                var sParameterName = sURLVariables[i].split('=');
+                if (sParameterName[0] == sParam) {
+                    return sParameterName[1];
+                }
+            }
+        }
+        var activityId = GetURLParameter('activityId');
+
+        window.addEventListener("load", getActivites);
+
+        function getActivites() {
+
+
+            const dbRef = ref(getDatabase());
+            get(child(dbRef, `Activites/` + activityId)).then((snapshot) => {
+                if (snapshot.exists()) {
+
+                    var actData = snapshot.val();
+                    var atype = "";
+                    if(actData['activityType'] == "inSide")
+                    {
+                        atype = "صفي";
+                    }else{
+                        atype = "لا صفي";
+                    }
+                    document.getElementById('title').innerText = actData['activityTitle'];
+                    document.getElementById('activType').innerText ="نوع النشاط :" + atype;
+                    document.getElementById('activBody').innerText ="محتوى النشاط :" + actData['activityBody'];
+                    console.log("activityId:" + activityId);
+
+                    get(child(dbRef, `ActivitesParentsDis/` + activityId)).then((ActivitesParentsDisSnapShot) => {
+                        if (ActivitesParentsDisSnapShot.exists()) {
+                            ActivitesParentsDisSnapShot.forEach((activSnap) => {
+                                var parentId = activSnap.key;
+                                var parentName = "";
+                                get(child(dbRef, `Parent/` + parentId)).then((pSnapshot) => {
+                                    if (pSnapshot.exists()) {
+
+                                        var parentdata = pSnapshot.val();
+                                        parentName = parentdata['name'];
+                                        console.log("parentName:" + parentName);
+                                        var v = activSnap.val();
+                                        if (v['isViewed'] == true) {
+
+
+                                            if (v['isAccesspted'] == true) {
+
+
+                                                document.getElementById('tdBody').innerHTML += '<tr><td>' + parentName + '</td><td><span class="status green"></span> موافق </td></tr>';
+                                            } else {
+                                                document.getElementById('tdBody').innerHTML += '<tr><td>' + parentName + '</td><td><span class="status red"></span> غير موافق </td></tr>';
+                                            }
+
+
+                                        } else {
+                                            document.getElementById('tdBody').innerHTML += '<tr><td>' + parentName + '</td><td><span class="status yellow"></span> في انتظار ولى الأمر </td></tr>';
+                                        }
+                                    }
+                                })
+
+
+                            });
+
+                        }
+                    });
+
+
+
+                } else {
+                    console.log("No data available");
+                }
+            }).catch((error) => {
+                console.error(error);
+            });
+        }
+
+
+
+    </script>
+</body>
+
+</html>
