@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/design"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical"
+    tools:context=".EarlyPermission">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="220dp"
+        android:text="الأستئذان المبكر"
+        android:gravity="center"
+        android:textColor="#7EA2FA"
+        android:textSize="40dp"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="اسم الطالب"
+        android:id="@+id/studentname"
+        android:textSize="25sp"
+        android:layout_marginTop="10dp"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:hint="الصف"
+        android:id="@+id/studentgrade"
+        android:textSize="25sp"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:hint="وقت الأستئذان"
+        android:id="@+id/time"
+        android:textSize="25sp"/>
+
+    <Button
+        android:id="@+id/btnSend"
+        style="@style/loginButton"
+        android:layout_width="215dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/home_gradient"
+        android:gravity="center"
+        android:minHeight="100dp"
+        android:onClick="sendToDB"
+        android:text="موافق"
+        android:textSize="20sp"
+        tools:layout_editor_absoluteX="144dp"
+        tools:layout_editor_absoluteY="620dp"
+        android:layout_gravity="center"/>
+</LinearLayout>
